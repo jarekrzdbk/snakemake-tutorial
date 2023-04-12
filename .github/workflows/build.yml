@@ -13,17 +13,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-
-    - name: Testing
-      uses: snakemake/snakemake-github-action@v1
-      with:
-        directory: '.'
-        snakefile: 'Snakefile'
-        args: '--cores 1 --use-conda --conda-cleanup-pkgs cache'
-        stagein: 'conda init bash &&
-                  conda activate base &&
-                  mamba env create --name snakemake-tutorial --file environment.yaml &&
-                  conda activate snakemake-tutorial'
+    
+    - name: Install Conda environment from environment.yml
+      uses: mamba-org/provision-with-micromamba@main
+      
+    - name: execute workflow
+      run: snakemake --cores=1
 
     - name: mapped_reads
       uses: actions/upload-artifact@v3
