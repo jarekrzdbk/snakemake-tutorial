@@ -1,7 +1,20 @@
+configfile: "config.yaml"
+
 rule all:
     input:
         "plots/quals.svg"
 
+rule download_data:
+    output:
+        "data/genome.fa",
+        "data/samples/A.fastq",
+        "data/samples/B.fastq"
+    shell:
+        """
+        curl -L https://api.github.com/repos/snakemake/snakemake-tutorial-data/tarball -o snakemake-tutorial-data.tar.gz &&
+        tar --wildcards -xf snakemake-tutorial-data.tar.gz --strip 1 "*/data"
+        """
+        
 rule bwa_map:
     input:
         "data/genome.fa",
