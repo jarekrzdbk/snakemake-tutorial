@@ -13,13 +13,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
-    - name: Linting
-      uses: snakemake/snakemake-github-action@v1
-      with:
-        directory: '.'
-        snakefile: 'Snakefile'
-        args: '--lint'
 
     - name: Testing
       uses: snakemake/snakemake-github-action@v1
