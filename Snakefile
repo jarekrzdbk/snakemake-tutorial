@@ -6,13 +6,31 @@ rule all:
 
 rule download_data:
     output:
-        "data/genome.fa",
-        "data/samples/A.fastq",
-        "data/samples/B.fastq"
+        "snakemake-tutorial-data.tar.gz"
     shell:
         """
-        curl -L https://api.github.com/repos/snakemake/snakemake-tutorial-data/tarball -o snakemake-tutorial-data.tar.gz &&
-        tar --wildcards -xf snakemake-tutorial-data.tar.gz --strip 1 "*/data"
+        curl -L https://api.github.com/repos/snakemake/snakemake-tutorial-data/tarball -o snakemake-tutorial-data.tar.gz
+        """
+
+rule extract_fa:
+    input:
+        "snakemake-tutorial-data.tar.gz"
+    output:
+        "data/genome.fa"
+    shell:
+        """
+        tar --wildcards -xf snakemake-tutorial-data.tar.gz --strip 1 "*/data/*.fa.*" &&
+        tar --wildcards -xf snakemake-tutorial-data.tar.gz --strip 1 "*/data/*.fa"
+        """
+
+rule extract_fastq:
+    input:
+        tar_file=rules.download_data.output
+    output:
+        "data/samples/{sample}.fastq"
+    shell:
+        """
+        tar --wildcards -xf snakemake-tutorial-data.tar.gz --strip 1 "*/data/samples/*.fastq"
         """
         
 rule bwa_map:
