@@ -14,9 +14,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+
+    - name: Install mambaforge on Linux
+      run: curl -L https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh -o Mambaforge-Linux-x86_64.sh && bash Mambaforge-Linux-x86_64.sh
+    
     - name: Install Conda environment from environment.yml
       uses: mamba-org/provision-with-micromamba@main
-      
+
     - name: execute workflow
       run: snakemake --cores=1
 
