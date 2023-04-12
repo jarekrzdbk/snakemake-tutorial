@@ -1,0 +1,50 @@
+name: Snakemake CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Linting
+      uses: snakemake/snakemake-github-action@v1
+      with:
+        directory: '.'
+        snakefile: 'Snakefile'
+        args: '--lint'
+
+    - name: Testing
+      uses: snakemake/snakemake-github-action@v1
+      with:
+        directory: '.'
+        snakefile: 'Snakefile'
+        args: '--cores 1 --use-conda --conda-cleanup-pkgs cache'
+
+    - name: mapped_reads
+      uses: actions/upload-artifact@v3
+
+      with:
+        name: mapped_reads
+        path: mapped_reads/
+    
+    - name: plots
+      uses: actions/upload-artifact@v3
+
+      with:
+        name: plots
+        path: plots/quals.svg
+
+    - name: calls
+      uses: actions/upload-artifact@v3
+
+      with:
+        name: cals
+        path: calls/all.vcf
