@@ -1,5 +1,3 @@
-SAMPLES = ["A", "B"]
-
 rule all:
     input:
         "plots/quals.svg"
