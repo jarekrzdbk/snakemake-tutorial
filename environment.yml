@@ -13,3 +13,4 @@ dependencies:
   - bwa =0.7.17
   - pysam =0.19
   - pygments
+  - libdeflate >=1.10,<1.14.0a0
