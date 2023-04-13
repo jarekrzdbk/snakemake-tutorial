@@ -12,3 +12,6 @@ dependencies:
   - bwa =0.7.17
   - pysam =0.21.0
   - pygments
+  - libcurl >=7.78.0,<8.0a0
+  - htslib >=1.13,<1.14.0a0
+  - toposort >=1.10
