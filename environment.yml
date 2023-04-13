@@ -2,7 +2,6 @@ name: test
 channels:
   - bioconda
   - conda-forge
-  - defaults
 dependencies:
   - snakemake-minimal >=7.3
   - jinja2
